@@ -5,11 +5,30 @@ function keyPress(e) {
     // this would test for whichever key is 40 and the ctrl key at the same time
     if (e.keyCode == 88) {
       var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
-      var storyElement = findParentWithClass(hoveredElement, 'story');
+      var storyElement = findParentWithClass(hoveredElement, 'story model item');
       if(storyElement != null){
+        if(storyIsOpen(storyElement)){
 
+        }
+        else {
+
+        }
       }
     }
+}
+
+function storyIsOpen(storyElement){
+  var children = storyElement.children;
+  var storyOpen = false;
+
+  for(var i = 0; !storyOpen && i < children.length; i++){
+    var child = children[i];
+    if(child.className.indexOf('edit') != -1){
+      storyOpen = true;
+    }
+  }
+
+  return storyOpen;
 }
 
 function findParentWithClass(element, parentClass){
