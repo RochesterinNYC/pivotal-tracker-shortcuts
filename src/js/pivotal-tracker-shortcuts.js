@@ -15,24 +15,25 @@ var keyCodeCommandMapping = {
 }
 
 function keyPress(e) {
-    // this would test for whichever key is 40 and the ctrl key at the same time
-    // 48 (0) --> 56 (8), 192 (`)
-    if(e.keyCode in keyCodeCommandMapping && e.ctrlKey){
-      var numPoints = keyCodeCommandMapping[e.keyCode];
+  if(e.keyCode in keyCodeCommandMapping && e.ctrlKey){
+    var numPoints = keyCodeCommandMapping[e.keyCode];
 
-      var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
-      var storyElement = findParentWithClass(hoveredElement, 'story model item');
-      if(storyElement != null){
-        if(storyIsOpen(storyElement)){
-          var cTag = $(storyElement).attr('data-cid');
-          var pointsSelectorId = '#' + numPoints + '_story_estimate_dropdown_' + cTag;
-          $(pointsSelectorId)[0].click();
-        }
-        else {
+    var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
+    var storyElement = findParentWithClass(hoveredElement, 'story model item');
+    if(storyElement != null){
+      if(!$(storyElement).hasClass('is_estimatable')){
+        return;
+      }
+      if(storyIsOpen(storyElement)){
+        var cTag = $(storyElement).attr('data-cid');
+        var pointsSelectorId = '#' + numPoints + '_story_estimate_dropdown_' + cTag;
+        $(pointsSelectorId)[0].click();
+      }
+      else {
 
-        }
       }
     }
+  }
 }
 
 function storyIsOpen(storyElement){
