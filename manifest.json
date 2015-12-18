@@ -7,13 +7,12 @@
     "http://www.pivotaltracker.com/*",
     "https://www.pivotaltracker.com/*"
   ],
-
   "content_scripts": [{
     "matches": [
       "http://www.pivotaltracker.com/*",
       "https://www.pivotaltracker.com/*"
     ],
-    "css": ["css/pivotal-tracker-shortcuts.css"],
-    "js": ["js/pivotal-tracker-shortcuts.js"]
+    "css": ["src/css/pivotal-tracker-shortcuts.css"],
+    "js": ["src/js/pivotal-tracker-shortcuts.js"]
   }]
 }
