@@ -12,9 +12,11 @@ var keyCodeCommandMapping = {
   55: 'setStoryPoints',
   56: 'setStoryPoints',
   192: 'setStoryPoints',
-  73: 'editStoryTitle',
-  85: 'editStoryDescription',
-  75: 'addStoryComment'
+  73: 'focusStoryTitle',
+  85: 'focusStoryDescription',
+  75: 'focusStoryComment',
+//  76: 'focusStoryLabel',
+  84: 'focusStoryTask'
 }
 
 function keyPressDispatcher(e) {
@@ -27,15 +29,35 @@ function keyPressDispatcher(e) {
   var numPoints = keyCodeCommandMapping[e.keyCode];
 }
 
-function editStoryTitle(storyElement, keyCode){
+function focusStoryTitle(storyElement, keyCode){
+  var titleSelectorId = '#story_name_' + $(storyElement).attr('data-cid');
+  focusOnField(storyElement, titleSelectorId);
+}
+
+function focusOnField(storyElement, focusSelector){
   if(storyIsOpen(storyElement)){
-    var cTag = $(storyElement).attr('data-cid');
-    var titleSelectorId = '#story_name_' + cTag;
-    $(titleSelectorId).focus();
+    $(focusSelector).focus();
   }
 }
 
-function editStoryDescription(storyElement, keyCode){
+function focusStoryComment(storyElement, keyCode){
+  var commentSelectorId = '#comment-edit-' + $(storyElement).attr('data-cid');
+  focusOnField(storyElement, commentSelectorId);
+}
+
+// Currently, if you focus on labels, other focuses stop working.
+// Seems to be due to the way the label dropdown and focuses/keypresses are handled in Tracker.
+// function focusStoryLabel(storyElement, keyCode){
+  // var labelSelectorId = '#story_add_label_text_' + $(storyElement).attr('data-cid');
+  // focusOnField(storyElement, labelSelectorId);
+// }
+
+function focusStoryTask(storyElement, keyCode){
+  var taskSelectorId = '.add_task';
+  focusOnField(storyElement, taskSelectorId);
+}
+
+function focusStoryDescription(storyElement, keyCode){
   if(storyIsOpen(storyElement)){
     var cTag = $(storyElement).attr('data-cid');
 
@@ -49,16 +71,6 @@ function editStoryDescription(storyElement, keyCode){
       var descriptionElement = $(storyElement).find('.rendered_description.tracker_markup');
       descriptionElement.click();
     }
-  }
-}
-
-function addStoryComment(storyElement, keyCode){
-  if(storyIsOpen(storyElement)){
-    var cTag = $(storyElement).attr('data-cid');
-
-    var commentSelectorId = '#comment-edit-' + cTag;
-    var commentElement = $(commentSelectorId);
-    commentElement.focus();
   }
 }
 
