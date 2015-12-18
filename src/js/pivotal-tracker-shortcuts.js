@@ -30,7 +30,9 @@ function keyPress(e) {
         $(pointsSelectorId)[0].click();
       }
       else {
-
+        if($(storyElement).hasClass('estimate_-1')){
+          $(storyElement).find('.estimate_' + numPoints).click();
+        }
       }
     }
   }
