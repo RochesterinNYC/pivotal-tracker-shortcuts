@@ -1,16 +1,31 @@
 var mouseXPosition = 0;
 var mouseYPosition = 0;
 
+var keyCodeCommandMapping = {
+  48: 0,
+  49: 1,
+  50: 2,
+  51: 3,
+  52: 4,
+  53: 5,
+  54: 6,
+  55: 7,
+  56: 8,
+  192: -1
+}
+
 function keyPress(e) {
     // this would test for whichever key is 40 and the ctrl key at the same time
-    if (e.keyCode == 88) {
+    // 48 (0) --> 56 (8), 192 (`)
+    if(e.keyCode in keyCodeCommandMapping && e.ctrlKey){
+      var numPoints = keyCodeCommandMapping[e.keyCode];
+
       var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
       var storyElement = findParentWithClass(hoveredElement, 'story model item');
       if(storyElement != null){
         if(storyIsOpen(storyElement)){
           var cTag = $(storyElement).attr('data-cid');
-          var num = 3;
-          var pointsSelectorId = '#' + num + '_story_estimate_dropdown_' + cTag;
+          var pointsSelectorId = '#' + numPoints + '_story_estimate_dropdown_' + cTag;
           $(pointsSelectorId)[0].click();
         }
         else {
