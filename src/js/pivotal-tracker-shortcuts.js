@@ -17,7 +17,8 @@ var keyCodeCommandMapping = {
   75: 'focusStoryComment',
 //  76: 'focusStoryLabel',
   84: 'focusStoryTask',
-  79: 'focusStoryOwners'
+  79: 'focusStoryOwners',
+  74: 'startStory'
 }
 
 function keyPressDispatcher(e) {
@@ -28,6 +29,13 @@ function keyPressDispatcher(e) {
     window[functionName](storyElement, e.keyCode);
   }
   var numPoints = keyCodeCommandMapping[e.keyCode];
+}
+
+function startStory(storyElement, focusSelector){
+  if(storyIsOpen(storyElement)){
+    var startStorySelectorId = '#story_state_button_' + $(storyElement).attr('data-cid') + '_started';
+    $(startStorySelectorId)[0].click();
+  }
 }
 
 function focusStoryOwners(storyElement){
