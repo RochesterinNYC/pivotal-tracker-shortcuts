@@ -2,6 +2,38 @@ var mouseXPosition = 0;
 var mouseYPosition = 0;
 
 var keyCodeCommandMapping = {
+  48: 'setStoryPoints',
+  49: 'setStoryPoints',
+  50: 'setStoryPoints',
+  51: 'setStoryPoints',
+  52: 'setStoryPoints',
+  53: 'setStoryPoints',
+  54: 'setStoryPoints',
+  55: 'setStoryPoints',
+  56: 'setStoryPoints',
+  192: 'setStoryPoints',
+  73: 'editStoryTitle'
+}
+
+function keyPressDispatcher(e) {
+  if(e.keyCode in keyCodeCommandMapping && e.ctrlKey){
+    var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
+    var storyElement = findParentWithClass(hoveredElement, 'story model item');
+    var functionName = keyCodeCommandMapping[e.keyCode];
+    window[functionName](storyElement, e.keyCode);
+  }
+  var numPoints = keyCodeCommandMapping[e.keyCode];
+}
+
+function editStoryTitle(storyElement, keyCode){
+  if(storyIsOpen(storyElement)){
+    var titleElement = $(storyElement).find('.editor.tracker_markup.std.name');
+    titleElement.focus();
+    titleElement.val(titleElement.val());
+  }
+}
+
+var keyCodeToPointsMapping = {
   48: 0,
   49: 1,
   50: 2,
@@ -14,25 +46,20 @@ var keyCodeCommandMapping = {
   192: -1
 }
 
-function keyPress(e) {
-  if(e.keyCode in keyCodeCommandMapping && e.ctrlKey){
-    var numPoints = keyCodeCommandMapping[e.keyCode];
-
-    var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
-    var storyElement = findParentWithClass(hoveredElement, 'story model item');
-    if(storyElement != null){
-      if(!$(storyElement).hasClass('is_estimatable')){
-        return;
-      }
-      if(storyIsOpen(storyElement)){
-        var cTag = $(storyElement).attr('data-cid');
-        var pointsSelectorId = '#' + numPoints + '_story_estimate_dropdown_' + cTag;
-        $(pointsSelectorId)[0].click();
-      }
-      else {
-        if($(storyElement).hasClass('estimate_-1')){
-          $(storyElement).find('.estimate_' + numPoints).click();
-        }
+function setStoryPoints(storyElement, keyCode){
+  var numPoints = keyCodeToPointsMapping[keyCode];
+  if(storyElement != null){
+    if(!$(storyElement).hasClass('is_estimatable')){
+      return;
+    }
+    if(storyIsOpen(storyElement)){
+      var cTag = $(storyElement).attr('data-cid');
+      var pointsSelectorId = '#' + numPoints + '_story_estimate_dropdown_' + cTag;
+      $(pointsSelectorId)[0].click();
+    }
+    else {
+      if($(storyElement).hasClass('estimate_-1')){
+        $(storyElement).find('.estimate_' + numPoints).click();
       }
     }
   }
@@ -67,7 +94,7 @@ function findParentWithClass(element, parentClass){
 }
 
 //Add Event Listener
-document.addEventListener('keyup', keyPress, false);
+document.addEventListener('keyup', keyPressDispatcher, false);
 //document.elementFromPoint(x, y);
 
 document.onmousemove = function(e) {
