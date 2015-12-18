@@ -13,11 +13,12 @@ var keyCodeCommandMapping = {
   56: 'setStoryPoints',
   192: 'setStoryPoints',
   73: 'editStoryTitle',
-  85: 'editStoryDescription'
+  85: 'editStoryDescription',
+  75: 'addStoryComment'
 }
 
 function keyPressDispatcher(e) {
-  if(e.keyCode in keyCodeCommandMapping && e.ctrlKey){
+  if(e.keyCode in keyCodeCommandMapping && e.ctrlKey && e.shiftKey){
     var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
     var storyElement = findParentWithClass(hoveredElement, 'story model item');
     var functionName = keyCodeCommandMapping[e.keyCode];
@@ -48,6 +49,16 @@ function editStoryDescription(storyElement, keyCode){
       var descriptionElement = $(storyElement).find('.rendered_description.tracker_markup');
       descriptionElement.click();
     }
+  }
+}
+
+function addStoryComment(storyElement, keyCode){
+  if(storyIsOpen(storyElement)){
+    var cTag = $(storyElement).attr('data-cid');
+
+    var commentSelectorId = '#comment-edit-' + cTag;
+    var commentElement = $(commentSelectorId);
+    commentElement.focus();
   }
 }
 
