@@ -8,7 +8,10 @@ function keyPress(e) {
       var storyElement = findParentWithClass(hoveredElement, 'story model item');
       if(storyElement != null){
         if(storyIsOpen(storyElement)){
-
+          var cTag = $(storyElement).attr('data-cid');
+          var num = 3;
+          var pointsSelectorId = '#' + num + '_story_estimate_dropdown_' + cTag;
+          $(pointsSelectorId)[0].click();
         }
         else {
 
@@ -44,6 +47,7 @@ function findParentWithClass(element, parentClass){
     return findParentWithClass(parentElement, parentClass);
   }
 }
+
 //Add Event Listener
 document.addEventListener('keyup', keyPress, false);
 //document.elementFromPoint(x, y);

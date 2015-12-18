@@ -13,6 +13,9 @@
       "https://www.pivotaltracker.com/*"
     ],
     "css": ["src/css/pivotal-tracker-shortcuts.css"],
-    "js": ["src/js/pivotal-tracker-shortcuts.js"]
+    "js": [
+      "src/js/jquery-2.1.4.min.js",
+      "src/js/pivotal-tracker-shortcuts.js"
+    ]
   }]
 }
