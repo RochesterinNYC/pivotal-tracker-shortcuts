@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Pivotal Tracker Shortcuts",
+  "description": "This extension will let SoundCloud users add extra functionality like filtering to their Stream.",
+  "version": "1.0",
+  "permissions": [
+    "http://www.pivotaltracker.com/*",
+    "https://www.pivotaltracker.com/*"
+  ],
+
+  "content_scripts": [{
+    "matches": [
+      "http://www.pivotaltracker.com/*",
+      "https://www.pivotaltracker.com/*"
+    ],
+    "css": ["css/pivotal-tracker-shortcuts.css"],
+    "js": ["js/pivotal-tracker-shortcuts.js"]
+  }]
+}
