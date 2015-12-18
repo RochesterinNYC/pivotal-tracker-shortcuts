@@ -24,7 +24,10 @@ var keyCodeCommandMapping = {
 function keyPressDispatcher(e) {
   if(e.keyCode in keyCodeCommandMapping && e.ctrlKey && e.shiftKey){
     var hoveredElement = document.elementFromPoint(mouseXPosition, mouseYPosition);
-    var storyElement = findParentWithClass(hoveredElement, 'story model item');
+    var storyElement = $(hoveredElement).closest('.story.model.item');
+    if(storyElement == null){
+      return;
+    }
     var functionName = keyCodeCommandMapping[e.keyCode];
     window[functionName](storyElement, e.keyCode);
   }
@@ -123,37 +126,12 @@ function setStoryPoints(storyElement, keyCode){
 }
 
 function storyIsOpen(storyElement){
-  var children = storyElement.children;
-  var storyOpen = false;
-
-  for(var i = 0; !storyOpen && i < children.length; i++){
-    var child = children[i];
-    if(child.className.indexOf('edit') != -1){
-      storyOpen = true;
-    }
-  }
-
-  return storyOpen;
-}
-
-function findParentWithClass(element, parentClass){
-  var parentElement = element.parentElement;
-  if(parentElement == null){
-    console.log('No parents with ', parentClass, ' were found.');
-    return null;
-  }
-  else if(parentElement.className.indexOf(parentClass) != -1){
-    return parentElement;
-  }
-  else {
-    return findParentWithClass(parentElement, parentClass);
-  }
+  return storyElement.find('.edit').length != 0;
 }
 
 //Add Event Listener
 document.addEventListener('keyup', keyPressDispatcher, false);
-//document.elementFromPoint(x, y);
-
+//Track mouse position for current story heuristic
 document.onmousemove = function(e) {
   mouseXPosition = e.clientX;
   mouseYPosition = e.clientY;
