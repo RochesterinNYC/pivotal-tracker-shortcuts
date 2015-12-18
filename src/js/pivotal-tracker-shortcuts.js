@@ -12,7 +12,8 @@ var keyCodeCommandMapping = {
   55: 'setStoryPoints',
   56: 'setStoryPoints',
   192: 'setStoryPoints',
-  73: 'editStoryTitle'
+  73: 'editStoryTitle',
+  85: 'editStoryDescription'
 }
 
 function keyPressDispatcher(e) {
@@ -27,9 +28,26 @@ function keyPressDispatcher(e) {
 
 function editStoryTitle(storyElement, keyCode){
   if(storyIsOpen(storyElement)){
-    var titleElement = $(storyElement).find('.editor.tracker_markup.std.name');
-    titleElement.focus();
-    titleElement.val(titleElement.val());
+    var cTag = $(storyElement).attr('data-cid');
+    var titleSelectorId = '#story_name_' + cTag;
+    $(titleSelectorId).focus();
+  }
+}
+
+function editStoryDescription(storyElement, keyCode){
+  if(storyIsOpen(storyElement)){
+    var cTag = $(storyElement).attr('data-cid');
+
+    var descriptionSelectorId = '#story_pending_description_' + cTag;
+    var descriptionElement = $(descriptionSelectorId);
+
+    if(descriptionElement.hasClass('editing')){
+      descriptionElement.focus();
+    }
+    else{
+      var descriptionElement = $(storyElement).find('.rendered_description.tracker_markup');
+      descriptionElement.click();
+    }
   }
 }
 
