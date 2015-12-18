@@ -15,7 +15,7 @@ var keyCodeCommandMapping = {
   73: 'focusStoryTitle',
   85: 'focusStoryDescription',
   75: 'focusStoryComment',
-//  76: 'focusStoryLabel',
+  //  76: 'focusStoryLabel',
   84: 'focusStoryTask',
   79: 'focusStoryOwners',
   74: 'startStory'
@@ -67,8 +67,8 @@ function focusStoryComment(storyElement, keyCode){
 // Currently, if you focus on labels, other focuses stop working.
 // Seems to be due to the way the label dropdown and focuses/keypresses are handled in Tracker.
 // function focusStoryLabel(storyElement, keyCode){
-  // var labelSelectorId = '#story_add_label_text_' + $(storyElement).attr('data-cid');
-  // focusOnField(storyElement, labelSelectorId);
+// var labelSelectorId = '#story_add_label_text_' + $(storyElement).attr('data-cid');
+// focusOnField(storyElement, labelSelectorId);
 // }
 
 function focusStoryTask(storyElement, keyCode){
@@ -115,7 +115,12 @@ function setStoryPoints(storyElement, keyCode){
     if(storyIsOpen(storyElement)){
       var cTag = $(storyElement).attr('data-cid');
       var pointsSelectorId = '#' + numPoints + '_story_estimate_dropdown_' + cTag;
-      $(pointsSelectorId)[0].click();
+      try {
+        $(pointsSelectorId)[0].click();
+      }
+      catch(err) {
+        console.log("Error occurred. Can't point with value (" + numPoints + ") that project doesn't support.");
+      }
     }
     else {
       if($(storyElement).hasClass('estimate_-1')){
