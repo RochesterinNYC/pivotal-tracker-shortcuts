@@ -15,6 +15,7 @@ All of these apply to while the mouse is hovering over the story of interest.
 - Ctrl + Shift + u: Jump into story's description field for editing.
 - Ctrl + Shift + t: Jump into story's new task field.
 - Ctrl + Shift + k: Jump into story's new comment field.
+- Ctrl + Shift + o: Jump to add story owners.
 
 * Can point already pointed stories only if the story is currently open (uncollapsed).
 
